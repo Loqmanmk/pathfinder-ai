@@ -1,0 +1,18 @@
+CREATE TABLE IF NOT EXISTS career_families (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     name VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS careers (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     name VARCHAR(150) NOT NULL UNIQUE,
+     family_id INT NOT NULL,
+     FOREIGN KEY (family_id) REFERENCES career_families(id)
+);
+
+CREATE TABLE IF NOT EXISTS recommendations (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     profile JSON NOT NULL,
+     top_family VARCHAR(100) NOT NULL,
+     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
