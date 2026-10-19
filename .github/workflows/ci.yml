@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ml-and-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ML dependencies
+        run: pip install -r ml/requirements.txt
+
+      - name: Train model
+        working-directory: ml
+        run: python -m src.train
+
+      - name: ML tests
+        working-directory: ml
+        run: python -m pytest
+
+      - name: Install backend dependencies
+        run: pip install -r backend/requirements.txt
+
+      - name: API tests
+        working-directory: backend
+        run: python -m pytest
